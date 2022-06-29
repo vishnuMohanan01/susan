@@ -1,0 +1,11 @@
+[Unit]
+Description=susan invisible classified service
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/root/.virtualenvs/susan/bin/python /root/services/susan/main.py -ip 142.93.208.25
+
+[Install]
+WantedBy=multi-user.target
