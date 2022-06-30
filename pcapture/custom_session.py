@@ -3,12 +3,9 @@ from collections import defaultdict
 
 from scapy.sessions import DefaultSession
 
+from blacklist.blacklist import blacklist
 from pcapture.features.context.packet_direction import PacketDirection
 from pcapture.flow import Flow
-
-EXPIRED_UPDATE = 40
-MACHINE_LEARNING_API = "http://localhost:8000/predict"
-GARBAGE_COLLECT_PACKETS = 100
 
 
 class CustomSession(DefaultSession):
@@ -38,17 +35,20 @@ class CustomSession(DefaultSession):
         flow.add_packet(packet, direction)
         packet_info = flow.get_data()
 
+        test01_ip_address = '134.209.159.150'
+        test02_ip_address = '206.189.130.141'
+
         # For test01
-        if packet_info['src_ip'] == '134.209.159.150':
+        if packet_info['src_ip'] == test01_ip_address:
             if self.TEST01_COUNT > 10:
-                # blacklist ip
-                pass
+                blacklist(test01_ip_address)
+            self.TEST01_COUNT += 1
 
         # For test02
-        elif packet_info['src_ip'] == '206.189.130.141':
+        elif packet_info['src_ip'] == test02_ip_address:
             if self.TEST02_COUNT > 10:
-                # blacklist ip
-                pass
+                blacklist(test02_ip_address)
+            self.TEST02_COUNT += 1
 
         else:
             pass
