@@ -18,6 +18,9 @@ class CustomSession(DefaultSession):
 
         self.TEST01_COUNT = 0
         self.TEST02_COUNT = 0
+        self.TEST01_BL_FLAG = False
+        self.TEST02_BL_FLAG = False
+        self.MAX_ATTACK_COUNT = 10
 
         super(CustomSession, self).__init__(*args, **kwargs)
 
@@ -39,15 +42,17 @@ class CustomSession(DefaultSession):
         test02_ip_address = '206.189.130.141'
 
         # For test01
-        if packet_info['src_ip'] == test01_ip_address:
-            if self.TEST01_COUNT > 10:
+        if packet_info['src_ip'] == test01_ip_address and not self.TEST02_BL_FLAG:
+            if self.TEST01_COUNT > self.MAX_ATTACK_COUNT:
                 blacklist(test01_ip_address)
+                self.TEST01_BL_FLAG = True
             self.TEST01_COUNT += 1
 
         # For test02
-        elif packet_info['src_ip'] == test02_ip_address:
-            if self.TEST02_COUNT > 10:
+        elif packet_info['src_ip'] == test02_ip_address and not self.TEST02_BL_FLAG:
+            if self.TEST02_COUNT > self.MAX_ATTACK_COUNT:
                 blacklist(test02_ip_address)
+                self.TEST02_BL_FLAG = True
             self.TEST02_COUNT += 1
 
         else:
