@@ -12,10 +12,11 @@ DB_PATH = os.path.join(DB_ROOT, DB_NAME)
 
 def add_ip_in_bl_table(ip_address):
     con = sqlite3.connect(DB_PATH)
-    cur = con.cursor()
 
     # add ip to blacklist
-    cur.execute(f"INSERT INTO blacklist VALUES ('${ip_address}')")
+    con.execute(f"INSERT INTO blacklist (address) VALUES ('{ip_address}');")
+    con.commit()
+    con.close()
 
 
 def add_address_to_ipset(ip_address):
