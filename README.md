@@ -1,2 +1,2 @@
 # susan
-An invisible daemon. Name inspired from Susan Storm.
+An invisible daemon to take care of a particular classified task. Name inspired from Susan Storm.
