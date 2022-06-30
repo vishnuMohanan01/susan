@@ -19,11 +19,11 @@ def add_ip_in_bl_table(ip_address):
 
 
 def add_address_to_ipset(ip_address):
-    os.system(f"ipset add {IPSET_NAME} ${ip_address}")
+    os.system(f"ipset add {IPSET_NAME} {ip_address}")
 
 
 def remove_address_from_ipset(ip_address):
-    os.system(f"ipset del {IPSET_NAME} ${ip_address}")
+    os.system(f"ipset del {IPSET_NAME} {ip_address}")
 
 
 def blacklist(ip_address):
